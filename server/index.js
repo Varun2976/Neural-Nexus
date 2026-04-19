@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 3000;
 const server = http.createServer(app);
 const wss = new WebSocketServer({ server });
 
-const activeClients = new Set();
+const activeClients = new Map(); // Map<userId, WebSocket>
 setActiveClients(activeClients);
 
 // CORS configuration
@@ -43,25 +43,33 @@ wss.on('connection', (ws, req) => {
   const token = url.searchParams.get('token');
 
   if (!token) {
-    ws.close(4001, 'Missing token');
+    ws.close(4001, 'Unauthorized');
     return;
   }
 
   try {
-    jwt.verify(token, process.env.JWT_SECRET);
-    activeClients.add(ws);
-    console.log(`Client connected. Active clients: ${activeClients.size}`);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded._id;
+
+    activeClients.set(userId, ws);
+    console.log(`[Shield WS] User ${userId} connected. Active clients: ${activeClients.size}`);
+
+    // Send confirmation
+    ws.send(JSON.stringify({
+      type: 'CONNECTED',
+      message: 'Shield active'
+    }));
 
     ws.on('close', () => {
-      activeClients.delete(ws);
-      console.log(`Client disconnected. Active clients: ${activeClients.size}`);
+      activeClients.delete(userId);
+      console.log(`[Shield WS] User ${userId} disconnected. Active clients: ${activeClients.size}`);
     });
 
     ws.on('error', (err) => {
-      console.error('WebSocket error:', err);
+      console.error(`[Shield WS] Error for user ${userId}:`, err);
     });
   } catch (error) {
-    ws.close(4002, 'Invalid token');
+    ws.close(4001, 'Unauthorized');
   }
 });
 
