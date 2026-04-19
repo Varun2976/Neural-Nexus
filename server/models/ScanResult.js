@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import { authDB } from '../db.js';
 
-const scanResultSchema = new mongoose.Schema(
+const scanResultSchema = new authDB.Schema(
   {
     type: {
       type: String,
@@ -30,6 +30,6 @@ const scanResultSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-const ScanResult = mongoose.model('ScanResult', scanResultSchema);
+const ScanResult = authDB.model('ScanResult', scanResultSchema);
 
 export default ScanResult;

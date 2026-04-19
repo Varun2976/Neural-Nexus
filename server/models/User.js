@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import { authDB } from '../db.js';
 
-const userSchema = new mongoose.Schema({
+const userSchema = new authDB.Schema({
   email: {
     type: String,
     unique: true,
@@ -13,6 +13,6 @@ const userSchema = new mongoose.Schema({
   }
 });
 
-const User = mongoose.model('User', userSchema);
+const User = authDB.model('User', userSchema);
 
 export default User;
