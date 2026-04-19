@@ -1,4 +1,7 @@
 /* Shield – Global Styles */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root {
   --color-bg: #0f1117;
