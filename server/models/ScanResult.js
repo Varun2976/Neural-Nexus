@@ -1,6 +1,7 @@
-import { authDB } from '../db.js';
+import mongoose from 'mongoose';
+import { deepfakeDB } from '../db.js';
 
-const scanResultSchema = new authDB.Schema(
+const scanResultSchema = new mongoose.Schema(
   {
     type: {
       type: String,
@@ -30,6 +31,6 @@ const scanResultSchema = new authDB.Schema(
   { timestamps: true }
 );
 
-const ScanResult = authDB.model('ScanResult', scanResultSchema);
+const ScanResult = deepfakeDB.model('ScanResult', scanResultSchema);
 
 export default ScanResult;

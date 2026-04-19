@@ -1,12 +1,23 @@
+import mongoose from 'mongoose';
 import { authDB } from '../db.js';
 
-const userSchema = new authDB.Schema({
+const userSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true
+  },
   email: {
     type: String,
     unique: true,
+    required: true,
+    trim: true,
+    lowercase: true
+  },
+  passwordHash: {
+    type: String,
     required: true
   },
-  passwordHash: String,
   createdAt: {
     type: Date,
     default: Date.now

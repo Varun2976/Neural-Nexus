@@ -1,6 +1,7 @@
+import mongoose from 'mongoose';
 import { deepfakeDB } from '../db.js';
 
-const flaggedContentSchema = new deepfakeDB.Schema({
+const flaggedContentSchema = new mongoose.Schema({
   contentHash: {
     type: String,
     unique: true,

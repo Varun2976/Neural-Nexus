@@ -1,12 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import { authDB, deepfakeDB } from './db.js';
 import authRoutes from './routes/authRoutes.js';
 import scanRoutes from './routes/scanRoutes.js';
 import feedbackRoutes from './routes/feedbackRoutes.js';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
