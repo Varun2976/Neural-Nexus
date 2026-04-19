@@ -1,19 +1,17 @@
-exports.submitFeedback = async (req, res) => {
-  try {
-    const { scanId, isCorrect, comment } = req.body;
-    // TODO: Store feedback in database
-    res.json({ success: true, message: 'Feedback submitted' });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
-};
+import ScanResult from '../models/ScanResult.js';
 
-exports.getFeedback = async (req, res) => {
+export const submitFeedback = async (req, res) => {
   try {
-    const { scanId } = req.params;
-    // TODO: Retrieve feedback from database
-    res.json({ success: true, data: [] });
+    const { scanId, userVerdict } = req.body;
+
+    const updated = await ScanResult.findByIdAndUpdate(
+      scanId,
+      { userVerdict },
+      { new: true }
+    );
+
+    res.json(updated);
   } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
+    res.status(500).json({ error: error.message });
   }
 };

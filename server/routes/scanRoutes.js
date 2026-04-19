@@ -1,8 +1,10 @@
-const express = require('express');
+import express from 'express';
+import { scanText, scanUrl, scanAudio } from '../controllers/scanController.js';
+
 const router = express.Router();
-const { scanUrlHandler, scanTextHandler } = require('../controllers/scanController');
 
-router.post('/url', scanUrlHandler);
-router.post('/text', scanTextHandler);
+router.post('/text', scanText);
+router.post('/url', scanUrl);
+router.post('/audio', scanAudio);
 
-module.exports = router;
+export default router;
