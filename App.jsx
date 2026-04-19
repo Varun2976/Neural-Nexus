@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="app">
       <header className="app__header">
-        <h1>🛡️ Shield</h1>
+        <h1>Shield</h1>
         <p>AI-Powered Threat Detection</p>
       </header>
 
